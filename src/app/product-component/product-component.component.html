@@ -1,0 +1,65 @@
+<div>
+  <button
+    *ngIf="tableStatus"
+    type="button"
+    class="btn btn-secondary"
+    (click)="showhideTable()"
+  >
+    Sakrij tablicu
+  </button>
+  <button
+    *ngIf="!tableStatus"
+    type="button"
+    class="btn btn-primary"
+    (click)="showhideTable()"
+  >
+    Prikazi tablicu
+  </button>
+
+  <table *ngIf="tableStatus" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Date Added</th>
+        <th scope="col">Status</th>
+        <th scope="col">Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.quantity }}</td>
+        <td *ngIf="product.price > 100" class="red">
+          {{ product.price | currency : "EUR" : "symbol-narrow" : "1.2-2" }}
+        </td>
+        <td *ngIf="product.price < 100" class="green">
+          {{ product.price | currency : "EUR" : "symbol-narrow" : "1.2-2" }}
+        </td>
+        <td>{{ product.dateAdded }}</td>
+        <td *ngIf="product.status == true">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="changeStatus(product.id)"
+          >
+            Aktivan
+          </button>
+        </td>
+        <td *ngIf="product.status == false">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="changeStatus(product.id)"
+          >
+            Neaktivan
+          </button>
+        </td>
+        <td>{{ product.type }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
